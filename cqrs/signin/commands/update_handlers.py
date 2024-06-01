@@ -8,7 +8,7 @@ class UpdateSigninCommandHandler(ICommandHandler):
         self.repo:SigninRepository = SigninRepository()
         
     async def handle(self, command:SigninCommand) -> bool:
-        id = command.details['id']
-        details = {key: value for key, value in command.details.items() if key != 'id'}
-        result = await self.repo.update_login_user(id, details)
+        username = command.details['username']
+        details = {key: value for key, value in command.details.items() if key != 'username'}
+        result = await self.repo.update_login_user(username, details)
         return result

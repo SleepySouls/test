@@ -8,13 +8,13 @@ from cqrs.user.commands.delete_handlers import DeleteUserCommandHandler
 from cqrs.user.query.query_handlers import ListUserQueryHandler
 from cqrs.user.command import UserCommand
 from cqrs.user.queries import UserListQuery
-
+from jwt.secure import get_current_user
     
 router = APIRouter(dependencies=[Depends(sess_db)])
 
 
 @router.post("/user/add", tags=['User'] )
-async def add_user(req: UserReq): 
+async def add_user(req: UserReq, current_user: dict = Depends(get_current_user)): 
     handler = AddUserCommandHandler()
     user_profile = dict()
     user_profile["user_id"] = req.user_id
@@ -31,7 +31,7 @@ async def add_user(req: UserReq):
         return JSONResponse(content={'message':'create trainer profile problem encountered'}, status_code=500) 
 
 @router.patch("/user/update/{id}", tags=['User'])
-async def update_user(id: int, req: UserReq):
+async def update_user(id: int, req: UserReq, current_user: dict = Depends(get_current_user)):
     user_dict = req.dict(exclude_unset=True)
     command = UserCommand()
     command.details = {'id': id, **user_dict}
@@ -43,7 +43,7 @@ async def update_user(id: int, req: UserReq):
         return JSONResponse(status_code=500, content="Update trainer profile problem encountered")
 
 @router.delete("/user/delete/{id}", tags=['User'])
-async def delete_user(id: int):
+async def delete_user(id: int, current_user: dict = Depends(get_current_user)):
     command = UserCommand()
     handler = DeleteUserCommandHandler()
     command.details = {'id' : id}
@@ -54,7 +54,7 @@ async def delete_user(id: int):
         return JSONResponse(status_code=500, content="Delete profile error")
 
 @router.get("/user/list", tags=['User'])
-async def list_users(): 
+async def list_users(current_user: dict = Depends(get_current_user)): 
     handler = ListUserQueryHandler()
     query:UserListQuery = await handler.handle() 
     return query.records

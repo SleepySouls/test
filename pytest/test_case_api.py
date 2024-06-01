@@ -73,13 +73,11 @@ async def test_update_signup():
 async def test_add_login():
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.post("/test/login_user/add", json={
-            "id": 1,
             "username": "testuser",
             "password": "testpass"
         })
     assert response.status_code == 200
     assert response.json() == {
-        "id": 1,
         "username": "testuser",
         "password": "testpass"
     }
@@ -98,13 +96,11 @@ async def test_list_login():
 async def test_update_login():
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.patch("/test/login_user/update/1", json={
-            "id": 1,
             "username": "updateduser",
             "password": "updatedpass"
         })
     assert response.status_code == 200
     assert response.json() == {
-        "id": 1,
         "username": "updateduser",
         "password": "updatedpass"
     }

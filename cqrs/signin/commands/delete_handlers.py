@@ -10,5 +10,5 @@ class DeleteSigninCommandHandler(ICommandHandler):
     
         
     async def handle(self, command:SigninCommand) -> bool:
-        result = await self.repo.delete_login_user(command.details.get("id"))
+        result = await self.repo.delete_login_user(command.details.get("username"))
         return result

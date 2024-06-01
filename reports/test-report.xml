@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="18" skipped="0" tests="52" time="29.131" timestamp="2024-06-01T09:41:23.295754" hostname="DESKTOP-4J05TAB"><testcase classname="test_campaign_api" name="test_add_campaign" time="0.974"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_add_campaign():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.post("/test/campaign/add", json={
+                "campaign_id": 1,
+                "title": "test campaign",
+                "description": "this is the test",
+                "goal_amount": 100000,
+                "raised_amount": 12345,
+                "start_date": "2024-05-12",
+                "end_date": "2024-05-30",
+                "category": "veteran",
+                "media": "http://127.0.0.1:8000/docs#/Campaign/add_campaign_test_campaign_add_post",
+                "status": "incomplete"
+            })
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_campaign_api.py:30: AssertionError</failure></testcase><testcase classname="test_campaign_api" name="test_update_campaign" time="0.526" /><testcase classname="test_campaign_api" name="test_delete_campaign" time="0.436" /><testcase classname="test_campaign_api" name="test_list_campaign" time="0.495" /><testcase classname="test_case_api" name="test_add_signup" time="0.835" /><testcase classname="test_case_api" name="test_list_signup" time="0.489" /><testcase classname="test_case_api" name="test_update_signup" time="0.452" /><testcase classname="test_case_api" name="test_add_login" time="0.008"><failure message="assert 404 == 200&#10; +  where 404 = &lt;Response [404 Not Found]&gt;.status_code">@pytest.mark.asyncio
+    async def test_add_login():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.post("/test/login_user/add", json={
+                "username": "testuser",
+                "password": "testpass"
+            })
+&gt;       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = &lt;Response [404 Not Found]&gt;.status_code
+
+test_case_api.py:79: AssertionError</failure></testcase><testcase classname="test_case_api" name="test_list_login" time="0.562" /><testcase classname="test_case_api" name="test_update_login" time="0.508"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_update_login():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.patch("/test/login_user/update/1", json={
+                "username": "updateduser",
+                "password": "updatedpass"
+            })
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_case_api.py:102: AssertionError</failure></testcase><testcase classname="test_case_api" name="test_add_users" time="0.550" /><testcase classname="test_case_api" name="test_list_users" time="0.501" /><testcase classname="test_case_api" name="test_update_user" time="0.455" /><testcase classname="test_case_api" name="test_add_newsfeed" time="0.463" /><testcase classname="test_case_api" name="test_update_newsfeed" time="0.499" /><testcase classname="test_case_api" name="test_list_newsfeed" time="0.450" /><testcase classname="test_case_api" name="test_add_campaign" time="0.485" /><testcase classname="test_case_api" name="test_update_campaign" time="0.445" /><testcase classname="test_case_api" name="test_list_campaign" time="0.421" /><testcase classname="test_case_api" name="test_add_donation" time="0.653" /><testcase classname="test_case_api" name="test_update_donation" time="0.948" /><testcase classname="test_case_api" name="test_list_donation" time="0.430" /><testcase classname="test_case_api" name="test_delete_donation" time="0.682" /><testcase classname="test_case_api" name="test_delete_newsfeed" time="0.604" /><testcase classname="test_case_api" name="test_delete_user" time="0.732" /><testcase classname="test_case_api" name="test_delete_login" time="0.560"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_delete_login():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.delete("/test/login_user/delete/1")
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_case_api.py:361: AssertionError</failure></testcase><testcase classname="test_case_api" name="test_delete_signup" time="0.548" /><testcase classname="test_delete_api" name="test_delete_donation" time="0.564"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_delete_donation():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.delete("/test/donation/delete/1")
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_delete_api.py:19: AssertionError</failure></testcase><testcase classname="test_delete_api" name="test_delete_newsfeed" time="0.613"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_delete_newsfeed():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.delete("/test/newsfeed/delete/1")
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_delete_api.py:26: AssertionError</failure></testcase><testcase classname="test_delete_api" name="test_delete_user" time="0.446"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_delete_user():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.delete("/test/user/delete/1")
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_delete_api.py:33: AssertionError</failure></testcase><testcase classname="test_delete_api" name="test_delete_login" time="0.455"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_delete_login():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.delete("/test/login_user/delete/1")
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_delete_api.py:40: AssertionError</failure></testcase><testcase classname="test_delete_api" name="test_delete_signup" time="0.470"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_delete_signup():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.delete("/test/signup/delete/1")
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_delete_api.py:47: AssertionError</failure></testcase><testcase classname="test_donation_api" name="test_add_donation" time="0.526"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_add_donation():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.post("/test/donation/add", json={
+                "donation_id": 1,
+                "campaign_id": 1,
+                "donator_id": 1,
+                "donation_amount": 100000,
+                "donation_date": "2024-05-12",
+                "message_leaving": "Hope you will have a good test"
+            })
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_donation_api.py:26: AssertionError</failure></testcase><testcase classname="test_donation_api" name="test_update_donation" time="0.491"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_update_donation():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.patch("/test/donation/update/1", json={
+                "donation_id": 1,
+                "campaign_id": 1,
+                "donator_id": 1,
+                "donation_amount": 200000,
+                "donation_date": "2024-05-13",
+                "message_leaving": "Hope you will have a good update test"
+            })
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_donation_api.py:47: AssertionError</failure></testcase><testcase classname="test_donation_api" name="test_delete_donation" time="0.455"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_delete_donation():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.delete("/test/donation/delete/1")
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_donation_api.py:61: AssertionError</failure></testcase><testcase classname="test_donation_api" name="test_list_donation" time="0.447" /><testcase classname="test_newsfeed_api" name="test_add_newsfeed" time="0.510"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_add_newsfeed():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.post("/test/newsfeed/add", json={
+                "newsfeed_id": 1,
+                "author": "test newsfeed",
+                "headline": "this is the test",
+                "summary": "This is the test of newsfeed's summary",
+                "media": "http://127.0.0.1:8000/docs#/Newsfeed/add_newsfeed_test_newsfeed_add_post",
+                "publish_date": "2024-05-12",
+                "category": "veteran",
+                "author_id": 1,
+            })
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_newsfeed_api.py:28: AssertionError</failure></testcase><testcase classname="test_newsfeed_api" name="test_update_newsfeed" time="0.466"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_update_newsfeed():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.patch("/test/newsfeed/update/1", json={
+                "newsfeed_id": 1,
+                "author": "test update newsfeed",
+                "headline": "this is the test of update newsfeed",
+                "summary": "This is the test of update newsfeed's summary",
+                "media": "http://127.0.0.1:8000/docs#/Newsfeed/add_newsfeed_test_newsfeed_add_post",
+                "publish_date": "2024-05-13",
+                "category": "children",
+                "author_id": 1,
+            })
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_newsfeed_api.py:53: AssertionError</failure></testcase><testcase classname="test_newsfeed_api" name="test_delete_newsfeed" time="0.425"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_delete_newsfeed():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.delete("/test/newsfeed/delete/1")
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_newsfeed_api.py:69: AssertionError</failure></testcase><testcase classname="test_newsfeed_api" name="test_list_newsfeed" time="0.437" /><testcase classname="test_signin_api" name="test_add_login" time="0.005"><failure message="assert 404 == 200&#10; +  where 404 = &lt;Response [404 Not Found]&gt;.status_code">@pytest.mark.asyncio
+    async def test_add_login():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.post("/test/login_user/add", json={
+                "id": 1,
+                "username": "testuser",
+                "password": "testpass"
+            })
+&gt;       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = &lt;Response [404 Not Found]&gt;.status_code
+
+test_signin_api.py:24: AssertionError</failure></testcase><testcase classname="test_signin_api" name="test_update_login" time="0.531"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_update_login():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.patch("/test/login_user/update/1", json={
+                "id": 1,
+                "username": "updateduser",
+                "password": "updatedpass"
+            })
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_signin_api.py:39: AssertionError</failure></testcase><testcase classname="test_signin_api" name="test_delete_login" time="0.462"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">@pytest.mark.asyncio
+    async def test_delete_login():
+        async with AsyncClient(app=app, base_url="http://test") as ac:
+            response = await ac.delete("/test/login_user/delete/1")
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+test_signin_api.py:50: AssertionError</failure></testcase><testcase classname="test_signin_api" name="test_list_login" time="0.444" /><testcase classname="test_signup_api" name="test_add_signup" time="0.872" /><testcase classname="test_signup_api" name="test_update_signup" time="0.513" /><testcase classname="test_signup_api" name="test_delete_signup" time="0.603" /><testcase classname="test_signup_api" name="test_list_signup" time="0.437" /><testcase classname="test_user_api" name="test_add_users" time="0.546" /><testcase classname="test_user_api" name="test_update_user" time="0.504" /><testcase classname="test_user_api" name="test_delete_user" time="0.473" /><testcase classname="test_user_api" name="test_list_users" time="0.443" /></testsuite></testsuites>

@@ -129,6 +129,3 @@ ALTER TABLE ONLY public.donation
 
 ALTER TABLE ONLY public.newsfeed
     ADD CONSTRAINT fk_newsfeed_donator_id FOREIGN KEY (author_id) REFERENCES public.user(user_id);
-
-ALTER TABLE ONLY public.user
-    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES public.signin(id);

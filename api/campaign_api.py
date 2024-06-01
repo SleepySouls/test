@@ -9,13 +9,12 @@ from cqrs.campaign.query.query_handlers import ListCampaignQueryHandler
 from cqrs.campaign.command import CampaignCommand
 from cqrs.campaign.queries import CampaignListQuery
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from jwt.secure import oauth2_scheme, get_current_user
-    
+from jwt.secure import get_current_user
 router = APIRouter(dependencies=[Depends(sess_db)])
 
 
 @router.post("/campaign/add", tags = ['Campaign'])
-async def add_campaign(req: CampaignReq): 
+async def add_campaign(req: CampaignReq, current_user: dict = Depends(get_current_user)): 
     handler = AddCampaignCommandHandler()
     campaign_profile = dict()
     campaign_profile["campaign_id"] = req.campaign_id
@@ -37,7 +36,7 @@ async def add_campaign(req: CampaignReq):
         return JSONResponse(content={'message':'Create campaign profile problem encountered'}, status_code=500) 
 
 @router.patch("/campaign/update/{id}", tags = ['Campaign'])
-async def update_campaign(id: int, req: CampaignReq):
+async def update_campaign(id: int, req: CampaignReq, current_user: dict = Depends(get_current_user)):
     campaign_dict = req.dict(exclude_unset=True)
     command = CampaignCommand()
     command.details = {'id': id, **campaign_dict}
@@ -49,7 +48,7 @@ async def update_campaign(id: int, req: CampaignReq):
         return JSONResponse(status_code=500, content="Update campaign profile problem encountered")
 
 @router.delete("/campaign/delete/{id}", tags = ['Campaign'])
-async def delete_campaign(id: int):
+async def delete_campaign(id: int, current_user: dict = Depends(get_current_user)):
     command = CampaignCommand()
     handler = DeleteCampaignCommandHandler()
     command.details = {'id' : id}
@@ -60,7 +59,7 @@ async def delete_campaign(id: int):
         return JSONResponse(status_code=500, content="Delete campaign error")
 
 @router.get("/campaign/list", tags = ['Campaign'])
-async def list_campaigns(): 
+async def list_campaigns(current_user: dict = Depends(get_current_user)): 
     handler = ListCampaignQueryHandler()
     query:CampaignListQuery = await handler.handle() 
     return query.records

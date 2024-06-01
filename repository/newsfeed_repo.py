@@ -10,7 +10,7 @@ class NewsfeedRepository:
         except Exception as e:
             print(f"Error creating newsfeed: {e}")
             return False
-
+        
     async def update_newsfeed(self, id: int, details: Dict[str, Any]) -> bool:
         try:
             newsfeed = await Newsfeed.get(id)

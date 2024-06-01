@@ -8,13 +8,13 @@ from cqrs.newsfeed.commands.delete_handlers import DeleteNewsfeedCommandHandler
 from cqrs.newsfeed.query.query_handlers import ListNewsfeedQueryHandler
 from cqrs.newsfeed.command import NewsfeedCommand
 from cqrs.newsfeed.queries import NewsfeedListQuery
-
+from jwt.secure import get_current_user
 
 router = APIRouter(dependencies=[Depends(sess_db)])
 
 
 @router.post("/newsfeed/add", tags=['Newsfeed'])
-async def add_newsfeed(req: NewsfeedReq): 
+async def add_newsfeed(req: NewsfeedReq, current_user: dict = Depends(get_current_user)): 
     handler = AddNewsfeedCommandHandler()
     newsfeed_profile = dict()
     newsfeed_profile["newsfeed_id"] = req.newsfeed_id
@@ -34,7 +34,7 @@ async def add_newsfeed(req: NewsfeedReq):
         return JSONResponse(content={'message':'create newsfeed problem encountered'}, status_code=500) 
 
 @router.patch("/newsfeed/update/{id}", tags=['Newsfeed'])
-async def update_newsfeed(id: int, req: NewsfeedReq):
+async def update_newsfeed(id: int, req: NewsfeedReq, current_user: dict = Depends(get_current_user)):
     newsfeed_dict = req.dict(exclude_unset=True)
     command = NewsfeedCommand()
     command.details = {'id': id, **newsfeed_dict}
@@ -46,7 +46,7 @@ async def update_newsfeed(id: int, req: NewsfeedReq):
         return JSONResponse(status_code=500, content="Update newsfeed problem encountered")
 
 @router.delete("/newsfeed/delete/{id}", tags=['Newsfeed'])
-async def delete_newsfeed(id: int):
+async def delete_newsfeed(id: int, current_user: dict = Depends(get_current_user)):
     command = NewsfeedCommand()
     handler = DeleteNewsfeedCommandHandler()
     command.details = {'id' : id}
@@ -57,7 +57,7 @@ async def delete_newsfeed(id: int):
         return JSONResponse(status_code=500, content="Delete newsfeed error")
 
 @router.get("/newsfeed/list", tags=['Newsfeed'])
-async def list_newsfeeds(): 
+async def list_newsfeeds(current_user: dict = Depends(get_current_user)): 
     handler = ListNewsfeedQueryHandler()
     query:NewsfeedListQuery = await handler.handle() 
     return query.records

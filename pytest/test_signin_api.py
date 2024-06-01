@@ -16,14 +16,12 @@ def anyio_backend():
 @pytest.mark.asyncio
 async def test_add_login():
     async with AsyncClient(app=app, base_url="http://test") as ac:
-        response = await ac.post("/test/login_user/add", json={
-            "id": 1,
+        response = await ac.post("/test/login_user/login", json={
             "username": "testuser",
             "password": "testpass"
         })
     assert response.status_code == 200
     assert response.json() == {
-        "id": 1,
         "username": "testuser",
         "password": "testpass"
     }
@@ -31,22 +29,20 @@ async def test_add_login():
 @pytest.mark.asyncio
 async def test_update_login():
     async with AsyncClient(app=app, base_url="http://test") as ac:
-        response = await ac.patch("/test/login_user/update/1", json={
-            "id": 1,
-            "username": "updateduser",
+        response = await ac.patch("/test/login_user/update/testuser", json={
+            "username": "testuser",
             "password": "updatedpass"
         })
     assert response.status_code == 200
     assert response.json() == {
-        "id": 1,
-        "username": "updateduser",
+        "username": "testuser",
         "password": "updatedpass"
     }
 
 @pytest.mark.asyncio
 async def test_delete_login():
     async with AsyncClient(app=app, base_url="http://test") as ac:
-        response = await ac.delete("/test/login_user/delete/1")
+        response = await ac.delete("/test/login_user/delete/testuser")
     assert response.status_code == 200
     assert response.json() == {"message": "Profile deleted successfully"}
 

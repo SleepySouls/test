@@ -17,35 +17,32 @@ class SigninRepository:
             print(f"Error creating login user: {e}")
             return False
 
-    async def authenticate_login_user(self, username: str, password: str) -> bool:
+    async def update_login_user(self, username: str, details: Dict[str, Any]) -> bool:
         try:
-            user = await Signin.query.where(
-                (Signin.username == username) & 
-                (Signin.password == password)
-            ).gino.first()
-            return user is not None
-        except Exception as e:
-            print(f"Authentication error: {e}")
-            return False
-
-    async def update_login_user(self, id: int, details: Dict[str, Any]) -> bool:
-        try:
-            user = await Signin.get(id)
-            await user.update(**details).apply()
-            return True
+            user = await Signin.query.where(Signin.username == username).gino.first()
+            if user is not None:
+                await user.update(**details).apply()
+                return True
+            else:
+                print(f"No user with username '{username}' found")
+                return False
         except Exception as e:
             print(f"Error updating login user: {e}")
             return False
 
-    async def delete_login_user(self, id: int) -> bool:
+    async def delete_login_user(self, username: str) -> bool:
         try:
-            user = await Signin.get(id)
-            await user.delete()
-            return True
+            user = await Signin.query.where(Signin.username == username).gino.first()
+            if user is not None:
+                await user.delete()
+                return True
+            else:
+                print(f"No user with username '{username}' found")
+                return False
         except Exception as e:
             print(f"Error deleting login user: {e}")
             return False
-
+    
     async def get_login_user_by_id(self, id: int):
         try:
             return await Signin.get(id)
